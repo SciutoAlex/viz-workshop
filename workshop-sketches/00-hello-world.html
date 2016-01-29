@@ -2,7 +2,47 @@
     <head>
         <title>Our First D3 Example</title>
         <style>
-            /* Where we will do our styling */
+            /*HTML STYLES*/
+            .chart div {
+                font: 10px sans-serif;
+                background-color: steelblue;
+                text-align: right;
+                padding: 3px;
+                margin: 1px;
+                color: white;
+            }
+            
+            p {
+                font-size:20px;
+                font-family:arial;
+                height:20px;
+            }
+            
+            /*SVG STYLES*/
+            .chart rect {
+                fill: steelblue; 
+            }
+            
+            .chart text {
+                fill: white;
+                font-size:12px;
+                font-family:arial;
+                alignment-baseline: middle;
+                text-anchor: end;
+            }
+            
+            .chart .axis text {
+                fill: black;    
+            }
+            
+            .chart .axis line {
+                stroke: black;    
+            }
+            
+            .chart .axis path {
+                fill: none;
+                stroke: black;
+            }
         </style>
     </head>
     <body>
