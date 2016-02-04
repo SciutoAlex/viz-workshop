@@ -11,12 +11,16 @@
                 stroke-width:10;
             }
             
+            .chart .blue {
+                fill: steelblue;
+            }
+            
             .chart text {
                 fill: white;
                 font-size:12px;
                 font-family:arial;
-                alignment-baseline: left;
-                text-anchor: beginning;
+                alignment-baseline: middle;
+                text-anchor: end;
             }
             
             .chart .axis text {
@@ -34,18 +38,16 @@
         </style>
     </head>
     <body>
+        <!--1. Add in a rect, a polygon, and an ellipse-->
+        <!--2. Wrap two or three elements in a <g> element and use transform="translate(x,y)" to move a group around-->
         <svg class="chart" width="800" height="600">
-
+            <circle class="blue" r="10" cx="40" cy="50" />
+            <circle r="10" cx="140" cy="50" />
+            <circle r="10" cx="40" cy="150" />
         </svg>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script>
-            var chart = d3.select('.chart')
-            chart.append('rect')
-                .attr({x : 10, y: 10, width: 400, height: 50})
-            
-            chart.append('text')
-                .text('all is working well!')
-                .attr({x : 30, y: 40})
+            // Where we will do our coding. Ignore for now.
         </script>
     </body>    
 </html>

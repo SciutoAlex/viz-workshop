@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Our First D3 Example</title>
+        <style>
+            .chart rect {
+                fill: steelblue; 
+            }
+            
+            .chart text {
+                fill: white;
+                font-size:12px;
+                font-family:arial;
+                alignment-baseline: middle;
+                text-anchor: end;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <svg class="chart">
+            <circle cx="50" cy="100" r="50" />
+            <circle cx="150" cy="100" r="50" />
+            <circle cx="250" cy="100" r="50" />
+            <circle cx="350" cy="100" r="50" />
+            <circle cx="450" cy="100" r="50" />
+        </svg>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script>
+            var dataArray = [10,20,30];
+            var width = 800;
+           
+            
+            var chart = d3.select('.chart')
+                .attr('width', 500)
+                .attr('height', 600);
+            
+            var dataJoin = chart.selectAll('circle').data(dataArray);
+
+            dataJoin.exit()
+                .style('fill', 'red')
+                .transition()
+                .delay(500)
+                .duration(500)
+                .attr('r', 0)
+                .remove();
+                
+   
+            
+            
+            
+        </script>
+    </body>    
+</html>

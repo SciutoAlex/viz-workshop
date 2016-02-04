@@ -1,29 +1,3 @@
-var dataArray = [
-    {value: 4, category: 'prior'},
-    {value: 3, category: 'prior'},
-    {value: 10, category: 'during'},
-    {value: 14, category: 'during'},
-    {value: 4, category: 'prior'},
-    {value: 18, category: 'during'},
-    {value: 3, category: 'prior'},
-    {value: 6, category: 'after'},
-    {value: 3, category: 'prior'},
-    {value: 8, category: 'after'}
-]
-
-var dataArray = [
-    {value: 4, category: 'prior', name: "Hydra"},
-    {value: 3, category: 'prior', name: "Arrow"},
-    {value: 10, category: 'during', name: "Swan"},
-    {value: 14, category: 'during', name: "Flame"},
-    {value: 4, category: 'prior', name: "Pearl"},
-    {value: 18, category: 'during', name: "Orchid"},
-    {value: 3, category: 'prior', name: "Staff"},
-    {value: 6, category: 'after', name: "Looking Glass"},
-    {value: 3, category: 'prior', name: "Tempest"},
-    {value: 8, category: 'after', name: "Lamp Post"}
-]
- 
  var data = [
     {"region" : "africa", "country":"South Africa","1960-age":49.0,"2013-age":56.7,"1960-gdp":3543.5,"2013-gdp":6090.3},
     {"region" : "americas", "country":"Uruguay","1960-age":67.9,"2013-age":76.8,"1960-gdp":3152.0,"2013-gdp":7771.9},
