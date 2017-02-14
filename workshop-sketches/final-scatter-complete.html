@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>Our First D3 Example</title>
+        <style>
+            svg {
+                border: 1px solid #aaa;
+            }
+            .chart rect {
+                fill: steelblue;
+            }
+
+            .chart .blue {
+                fill: steelblue;
+            }
+
+            .chart text {
+                font-size:12px;
+                font-family:arial;
+                alignment-baseline: middle;
+                text-anchor: end;
+            }
+
+            .chart .axis text {
+                fill: black;
+            }
+
+            .chart .axis line {
+                stroke: black;
+            }
+
+            .chart .axis path {
+                fill: none;
+                stroke: black;
+            }
+        </style>
+    </head>
+    <body>
+        <!--1. Add in a rect, a polygon, and an ellipse-->
+        <!--2. Wrap two or three elements in a <g> element and use transform="translate(x,y)" to move a group around-->
+        <svg class="chart" width="800" height="400">
+        </svg>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="../scaffolding/data-life-wealth.js" charset="utf-8"></script>
+        <script>
+
+            // Normally we'd request data like this...
+            // d3.csv("http://alexsciuto.com/cmu/us-state-populations.csv", function(data) {
+            //    var stateData = data
+            // });
+
+            // ... but for this workshop, we'll just use this pre-loaded variable.
+            var data = data;
+
+            var width = 700;
+            var height = 300;
+            var margin = 50;
+
+            var wealthScale = d3.scaleLinear()
+              .domain([0,85000])
+              .range([0,width]);
+
+            var ageScale = d3.scaleLinear()
+              .domain([0,85])
+              .range([height,0]);
+
+            var popScale = d3.scalePow()
+              .exponent(.5)
+              .domain([0,60])
+              .range([0,20]);
+
+            var colorScale = d3.scaleOrdinal()
+              .domain(['africa', 'americas', 'asia', 'europe'])
+              .range(d3.schemeCategory10);
+
+            var xAxis = d3.axisBottom()
+              .scale(wealthScale)
+              .ticks(10)
+
+            var yAxis = d3.axisLeft()
+              .scale(ageScale)
+              .ticks(10)
+
+
+            var svg = d3.select('svg').append('g').attr('transform', 'translate('+margin+','+margin+')');
+
+            var scaleG = svg.append('g');
+            scaleG.append('g').call(xAxis).attr('transform', 'translate(0,'+height+')');
+            scaleG.append('g').call(yAxis).attr('transform', 'translate(0,'+0+')');
+
+            var dataG = svg.append('g');
+            var countries = dataG.selectAll('circle')
+              .data(data)
+              .enter()
+              .append('circle')
+              .attr('cy', function(d) { return ageScale(d['1960-age'])})
+              .attr('cx', function(d) { return wealthScale(d['1960-gdp'])})
+              .attr('r', function(d) { return popScale(d['pop'])})
+              .style('fill', function(d) { return colorScale(d['region'])});
+
+            setTimeout(function() {
+              countries
+                .transition()
+                .duration(1500)
+                .attr('cy', function(d) { return ageScale(d['2013-age'])})
+                .attr('cx', function(d) { return wealthScale(d['2013-gdp'])})
+                .attr('r', function(d) { return popScale(d['pop'])});
+            }, 1500)
+
+
+
+
+
+        </script>
+    </body>
+</html>

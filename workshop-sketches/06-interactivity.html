@@ -6,13 +6,13 @@
                 border: 1px solid #aaa;
             }
             .chart rect {
-                fill: steelblue; 
+                fill: steelblue;
             }
-            
+
             .chart .blue {
                 fill: steelblue;
             }
-            
+
             .chart text {
                 fill: black;
                 font-size:10px;
@@ -20,20 +20,20 @@
                 alignment-baseline: middle;
                 text-anchor: end;
             }
-            
+
             .chart .axis text {
-                fill: black;    
+                fill: black;
             }
-            
+
             .chart .axis line {
-                stroke: black;    
+                stroke: black;
             }
-            
+
             .chart .axis path {
                 fill: none;
                 stroke: black;
             }
-            
+
             .chart path {
                 fill:none;
             }
@@ -44,87 +44,85 @@
         <!--2. Wrap two or three elements in a <g> element and use transform="translate(x,y)" to move a group around-->
         <svg class="chart" width="800" height="900">
         </svg>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="../scaffolding/data-states.js" charset="utf-8"></script>
         <script>
-            
+
             // Normally we'd request data like this...
             // d3.csv("http://alexsciuto.com/cmu/us-state-populations.csv", function(data) {
-            //    var stateData = data   
+            //    var stateData = data
             // });
-            
+
             // ... but for this workshop, we'll just use this pre-loaded variable.
             var stateData = data
             var barHeight = 10;
             var width = 800;
-            
-            var xScale = d3.scale.linear()
+
+            var xScale = d3.scaleLinear()
                 .domain([0,40000000])
                 .range([0,width - 150])
-            
-            var xAxis = d3.svg.axis()
-                .orient('top')
+
+            var xAxis = d3.axisTop()
                 .scale(xScale)
-                
-            var colorScale = d3.scale.ordinal()
+
+            var colorScale = d3.scaleOrdinal()
                 .domain(["S", "W", "NE", "SW", "MW", "MA"])
                 .range(["red", "orange", "yellow", "green", "blue", "purple"])
-            
+
             var chart = d3.select('.chart')
                 .attr('width', width)
                 .attr('height', barHeight * data.length + 50);
-            
+
             var axisG = chart.append('g')
                 .call(xAxis)
                 .attr('transform', 'translate(100,30)');
-                   
+
             axisG.selectAll('line')
                 .attr('y2', barHeight * data.length + 40)
                 .style('stroke', '#ddd')
-                
+
             var states = chart.selectAll('.states')
                 .data(stateData)
                 .enter()
                 .append('g')
                 .attr('transform', function(dataPoint, index) { return 'translate(' + 0 + ',' + parseInt(index * barHeight + 40) + ')'; });
-            
+
             states.append('rect')
                 .attr('x', 100)
                 .attr('width', function(dataPoint, index) { return xScale(dataPoint['POPESTIMATE2015'])})
                 .attr('height', barHeight-1)
                 .style('fill', function(dataPoint, index) { return colorScale(dataPoint['REGION'])})
                 .on('mouseover', onHover)
-            
+
             states.append('text')
                 .text(function(dataPoint, index) { return dataPoint['NAME'];})
                 .attr('x', 90)
                 .attr('y', 5)
-                
+
             function onHover(dataPoint, index) {
                 var el = d3.select(this)
                 el
                 .transition()
                 .duration(500)
                 .attr('x', width + 30);
-                
+
                 setTimeout(function() {
                     el
                     .transition()
                     .duration(1000)
                     .attr('x', 100)
-                    .ease('bounce')
                 },1000);
             }
-            
-          
-            
-          
-             
-            
-                
-            
-              
-                      
+
+
+
+
+
+
+
+
+
+
         </script>
-    </body>    
+    </body>
 </html>

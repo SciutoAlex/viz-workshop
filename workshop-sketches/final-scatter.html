@@ -6,29 +6,28 @@
                 border: 1px solid #aaa;
             }
             .chart rect {
-                fill: steelblue; 
+                fill: steelblue;
             }
-            
+
             .chart .blue {
                 fill: steelblue;
             }
-            
+
             .chart text {
-                fill: white;
                 font-size:12px;
                 font-family:arial;
                 alignment-baseline: middle;
                 text-anchor: end;
             }
-            
+
             .chart .axis text {
-                fill: black;    
+                fill: black;
             }
-            
+
             .chart .axis line {
-                stroke: black;    
+                stroke: black;
             }
-            
+
             .chart .axis path {
                 fill: none;
                 stroke: black;
@@ -38,21 +37,74 @@
     <body>
         <!--1. Add in a rect, a polygon, and an ellipse-->
         <!--2. Wrap two or three elements in a <g> element and use transform="translate(x,y)" to move a group around-->
-        <svg class="chart" width="800" height="900">
+        <svg class="chart" width="800" height="400">
         </svg>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="../scaffolding/data-life-wealth.js" charset="utf-8"></script>
         <script>
-            
+
             // Normally we'd request data like this...
             // d3.csv("http://alexsciuto.com/cmu/us-state-populations.csv", function(data) {
-            //    var stateData = data   
+            //    var stateData = data
             // });
-            
+
             // ... but for this workshop, we'll just use this pre-loaded variable.
-            var data = data
-            console.log(data);
-                        
+            var data = data;
+
+
+            //Global Variables (DONE)
+            var width = 700;
+            var height = 300;
+            var margin = 50;
+
+            //Set up scales (wealth, age, population, and color)
+            //d3.scaleLinear(), d3.scalePow(), d3.scaleOrdinal()
+            //scales have methods: .domain([xx,xx]), .range([xx,xx]), .exponent(x) {for scalePow only},
+            var wealthScale = d3.scaleLinear()
+              //TODO add in appropriate methods
+
+            var ageScale = d3.scaleLinear()
+              //TODO add in appropriate methods
+
+            var popScale = d3.scalePow()
+              //TODO add in appropriate methods
+
+            var colorScale = d3.scaleOrdinal()
+              .domain(['africa', 'americas', 'asia', 'europe'])
+              .range(d3.schemeCategory10);
+
+            //Add Axes d3.axisBottom, axisTop, axisLeft, or axisRight
+            //axes have methods: .scale(scaleObj)
+
+            //TODO create axis object and associate a scale with it.
+            var xAxis
+
+            //TODO create axis object and associate a scale with it.
+            var yAxis
+
+            //the base SVG element
+            var svg = d3.select('svg').append('g').attr('transform', 'translate('+margin+','+margin+')');
+
+            //axes. Notice that the xAxis is moved to the bottom of the screen. Because it's on the bottom.
+            var scaleG = svg.append('g');
+            scaleG.append('g').call(xAxis).attr('transform', 'translate(0,'+height+')');
+            scaleG.append('g').call(yAxis).attr('transform', 'translate(0,'+0+')');
+
+
+            var dataG = svg.append('g');
+            var countries = dataG.selectAll('circle')
+              //TODO create a data join. append circles. Set their position and size (attributes cx, cy, r) and color (style fill)
+              //use your data's properties 1960-age, 1960-gdp, region, and pop.
+
+            setTimeout(function() {
+              //TODO move the circles using transition. 2013-age, 2013-gdp
+
+            }, 1500)
+
+
+
+
+
         </script>
-    </body>    
+    </body>
 </html>

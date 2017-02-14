@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Our First D3 Example</title>
+        <style>
+            svg {
+                border: 1px solid #aaa;
+            }
+            .chart rect {
+                fill: steelblue;
+            }
+
+            .chart text {
+                fill: white;
+                font-size:12px;
+                font-family:arial;
+                alignment-baseline: middle;
+            }
+
+        </style>
+    </head>
+    <body>
+        <!-- The SVG root object -->
+        <svg class="chart"></svg>
+
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script>
+            var data = [4, 8, 15, 16, 23, 42];
+            var barHeight = 60;
+            var width = 800;
+
+            var chart = d3.select('.chart')
+                .attr('width', width)
+                .attr('height', barHeight * data.length);
+
+            for(var i = 0; i < data.length; i++) {
+                var barGroup = chart.append('g');
+                  .attr('transform', 'translate(' + 0 + ',' + i * barHeight + ')');
+
+                barGroup.append('rect')
+                  .attr('width', data[i] * 10 + "px")
+                  .attr('height', barHeight-4);
+
+                //!!!! 1. Add a text .append('text') label inside each rectangle to each bar similar to the previous graph
+                //!!!! 2. Set the text on the right side of the bar.
+
+            }
+        </script>
+    </body>
+</html>

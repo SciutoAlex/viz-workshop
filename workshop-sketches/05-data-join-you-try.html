@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>Our First D3 Example</title>
+        <style>
+            svg {
+                border: 1px solid #aaa;
+            }
+            .chart rect {
+                fill: steelblue;
+            }
+
+            .chart .blue {
+                fill: steelblue;
+            }
+
+            .chart text {
+                fill: black;
+                font-size:10px;
+                font-family:arial;
+                alignment-baseline: middle;
+                text-anchor: end;
+            }
+
+            .chart .axis text {
+                fill: black;
+            }
+
+            .chart .axis line {
+                stroke: black;
+            }
+
+            .chart .axis path {
+                fill: none;
+                stroke: black;
+            }
+        </style>
+    </head>
+    <body>
+        <!--1. Add in a rect, a polygon, and an ellipse-->
+        <!--2. Wrap two or three elements in a <g> element and use transform="translate(x,y)" to move a group around-->
+        <svg class="chart" width="800" height="900">
+        </svg>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="../scaffolding/data-states.js" charset="utf-8"></script>
+        <script>
+
+
+                    // Normally we'd request data like this...
+                    // d3.csv("http://alexsciuto.com/cmu/us-state-populations.csv", function(data) {
+                    //    var stateData = data
+                    // });
+
+                    // ... but for this workshop, we'll just use this pre-loaded variable.
+                    var data = data
+                    var barHeight = 10;
+                    var width = 800;
+
+                    // example xScale(20000000) returns a value of 400
+                    var xScale = d3.scaleLinear()
+                        .domain([0,40000000])
+                        .range([0,width])
+
+                    // example colorSclale('S') returns a value of "red"
+                    var colorScale = d3.scaleOrdinal()
+                        .domain(["S", "W", "NE", "SW", "MW", "MA"])
+                        .range(["red", "orange", "yellow", "green", "blue", "purple"])
+
+                    var chart = d3.select('.chart')
+                        .attr('width', width)
+                        .attr('height', barHeight * data.length);
+
+                    var states = chart.append('g')
+                        .attr('transform', 'translate(50,0)')
+
+
+                    // OLD CODE
+                    // for(var i = 0; i < data.length; i++) {
+                    //     var stateGroup = states.append('g')
+                    //       .attr('transform', 'translate(' + 0 + ',' + i * barHeight + ')');
+                    //
+                    //     stateGroup.append('rect')
+                    //       .attr('width', xScale(data[i].POPESTIMATE2015))
+                    //       .attr('height', barHeight-1)
+                    //       .style('fill', colorScale(data[i].POPESTIMATE2015))
+                    //
+                    //     stateGroup.append('text')
+                    //       .text(data[i].NAME)
+                    //       .attr('height', barHeight/2)
+                    //
+                    // }
+
+                    // 1. Select an empty set of 'g' elements. These will hold our rects and texts elements
+                    var stateGroups = d3.selectAll('.states')
+                      //TODO create a data join and append the 'g' element to each new item. The <g> needs to be translated down.
+                      //If you do this correctly, you'll refresh the page and see a series of rectanges.
+
+                    stateGroups.append('rect')
+                           .attr('width', function(d,i) { return xScale(d.POPESTIMATE2015)})
+                           .attr('height', barHeight-1)
+                           .style('fill', function(d,i) { return colorScale(d.REGION)})
+
+                    // 2. Use stateGroups to append a 'text.' This will be very similar to the previous code.
+
+
+
+
+
+            },2500);
+
+
+        </script>
+    </body>
+</html>

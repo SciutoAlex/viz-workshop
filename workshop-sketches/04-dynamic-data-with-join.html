@@ -6,13 +6,13 @@
                 border: 1px solid #aaa;
             }
             .chart rect {
-                fill: steelblue; 
+                fill: steelblue;
             }
-            
+
             .chart .blue {
                 fill: steelblue;
             }
-            
+
             .chart text {
                 fill: black;
                 font-size:10px;
@@ -20,15 +20,15 @@
                 alignment-baseline: middle;
                 text-anchor: end;
             }
-            
+
             .chart .axis text {
-                fill: black;    
+                fill: black;
             }
-            
+
             .chart .axis line {
-                stroke: black;    
+                stroke: black;
             }
-            
+
             .chart .axis path {
                 fill: none;
                 stroke: black;
@@ -40,51 +40,109 @@
         <!--2. Wrap two or three elements in a <g> element and use transform="translate(x,y)" to move a group around-->
         <svg class="chart" width="800" height="900">
         </svg>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="../scaffolding/data-states.js" charset="utf-8"></script>
         <script>
-            
+
             // Normally we'd request data like this...
             // d3.csv("http://alexsciuto.com/cmu/us-state-populations.csv", function(data) {
-            //    var stateData = data   
+            //    var stateData = data
             // });
-            
+
             // ... but for this workshop, we'll just use this pre-loaded variable.
             var stateData = data
             var barHeight = 10;
             var width = 800;
-            
-            var xScale = d3.scale.linear()
+
+            var xScale = d3.scaleLinear()
                 .domain([0,40000000])
                 .range([0,width - 50])
-                
-            var colorScale = d3.scale.ordinal()
+
+            var colorScale = d3.scaleOrdinal()
                 .domain(["S", "W", "NE", "SW", "MW", "MA"])
                 .range(["red", "orange", "yellow", "green", "blue", "purple"])
-            
+
             var chart = d3.select('.chart')
                 .attr('width', width)
                 .attr('height', barHeight * data.length);
-                
-            
+
+
+            //only keep states that are over 4,000,000
+            var newDataHigh = data.filter(function(state) { return state.POPESTIMATE2015 > 4000000})
+
             var states = chart.selectAll('g')
-                .data(stateData)
+                .data(newDataHigh, function(d) { return d.NAME})
                 .enter()
                 .append('g')
                 .attr('transform', function(dataPoint, index) { return 'translate(' + 0 + ',' + index * barHeight + ')'; });
-            
+
             states.append('rect')
                 .attr('x', 50)
                 .attr('width', function(dataPoint, index) { return xScale(dataPoint['POPESTIMATE2015'])})
                 .attr('height', barHeight-1)
                 .style('fill', function(dataPoint, index) { return colorScale(dataPoint['REGION'])})
-            
+
             states.append('text')
                 .text(function(dataPoint, index) { return dataPoint['NAME'];})
                 .attr('x', 40)
                 .attr('y', 5)
-              
-                      
+
+
+            setTimeout(function() {
+
+                //only keep states that are lower than 8,000,000
+                var newDataLow = data.filter(function(state) { return state.POPESTIMATE2015 < 8000000})
+
+                var newStatesJoin = chart.selectAll('g')
+                  .data(newDataLow, function(state) { return state.NAME })
+
+
+                var statesExited = newStatesJoin.exit()
+
+                statesExited.select('rect').style('fill', 'black')
+
+                statesExited
+                  .transition()
+                  .duration(1500)
+                  .delay(1000)
+                  .attr('transform', function(dataPoint, index) { return 'translate(' + 0 + ',' + -10 + ')'; });
+
+                newStatesJoin
+                  .transition()
+                  .duration(1500)
+                  .delay(4000)
+                  .attr('transform', function(dataPoint, index) { return 'translate(' + 0 + ',' + index * barHeight + ')'; });
+
+                var statesEntered = newStatesJoin.enter()
+                  .append('g')
+                  .attr('transform', function(dataPoint, index) { return 'translate(' + 0 + ',' + 999 + ')'; })
+
+                statesEntered.transition()
+                  .duration(1500)
+                  .delay(7000)
+                  .attr('transform', function(dataPoint, index) { return 'translate(' + 0 + ',' + index * barHeight + ')'; });
+
+                statesEntered.append('rect')
+                  .attr('x', 50)
+                  .attr('width', function(dataPoint, index) { return xScale(dataPoint['POPESTIMATE2015'])})
+                  .attr('height', barHeight-1)
+                  .style('fill', function(dataPoint, index) { return colorScale(dataPoint['REGION'])})
+
+                statesEntered.append('text')
+                  .text(function(dataPoint, index) { return dataPoint['NAME'];})
+                  .attr('x', 40)
+                  .attr('y', 5)
+
+
+
+
+
+
+
+
+            },2500);
+
+
         </script>
-    </body>    
+    </body>
 </html>

@@ -6,11 +6,11 @@
                 border: 1px solid #aaa;
             }
             .chart rect {
-                fill: steelblue; 
+                fill: steelblue;
                 stroke: red;
                 stroke-width:10;
             }
-            
+
             .chart text {
                 fill: white;
                 font-size:12px;
@@ -18,15 +18,15 @@
                 alignment-baseline: left;
                 text-anchor: beginning;
             }
-            
+
             .chart .axis text {
-                fill: black;    
+                fill: black;
             }
-            
+
             .chart .axis line {
-                stroke: black;    
+                stroke: black;
             }
-            
+
             .chart .axis path {
                 fill: none;
                 stroke: black;
@@ -37,15 +37,19 @@
         <svg class="chart" width="800" height="600">
 
         </svg>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
         <script>
             var chart = d3.select('.chart')
             chart.append('rect')
-                .attr({x : 10, y: 10, width: 400, height: 50})
-            
+                .attr('x', 10)
+                .attr('y', 10)
+                .attr('width', 400)
+                .attr('height', 50)
+
             chart.append('text')
                 .text('all is working well!')
-                .attr({x : 30, y: 40})
+                .attr('x', 30)
+                .attr('y', 40)
         </script>
-    </body>    
+    </body>
 </html>

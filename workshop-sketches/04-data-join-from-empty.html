@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Our First D3 Example</title>
+        <style>
+            .chart rect {
+                fill: steelblue;
+            }
+
+            .chart text {
+                fill: white;
+                font-size:12px;
+                font-family:arial;
+                alignment-baseline: middle;
+                text-anchor: end;
+            }
+
+        </style>
+    </head>
+    <body>
+        <svg class="chart"></svg>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script>
+            var dataArray = [10,20,30,40,50];
+            var width = 800;
+
+
+            var chart = d3.select('.chart')
+                .attr('width', 500)
+                .attr('height', 600);
+
+            var dataJoin = chart.selectAll('g').data(dataArray); //The data join
+
+            var newGs = dataJoin.enter()  //The new <g> elements
+                .append('g')
+                .attr('transform', function(dataPoint, index) {
+                    return 'translate(' + parseInt(50 + index*100) + ','
+                    + 100
+                    + ')';
+                })
+
+            var newGsCircle = newGs.append('circle') //The new <circle> elements contained in the <g> elements
+                .style('fill', 'green')
+                .attr('r', 50)
+
+            //animate
+            newGs   //animate the <g> elements x,y position through translate(x,y)
+                .transition()
+                .duration(2000)
+                .delay(500)
+                .attr('transform', function(dataPoint, index) {
+                    return 'translate(' + parseInt(50 + index*100) + ','
+                    + parseInt(100 + index * 50)
+                    + ')';
+                })
+
+            newGsCircle  //animate the <circle> elements radius and fill color.
+                .transition()
+                .delay(500)
+                .duration(2000)
+                .attr('r', function(dataPoint) { return dataPoint; })
+                .style('fill', 'blue');
+
+
+
+        </script>
+    </body>
+</html>
